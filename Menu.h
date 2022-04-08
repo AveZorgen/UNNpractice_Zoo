@@ -1,20 +1,138 @@
-#pragma once
+//
+// Created by ave-zorgen on 01.04.2022.
+//
+
+#ifndef ZOO2_MENU_H
+#define ZOO2_MENU_H
+
 #include "Zoo.h"
 
-class Menu {
+class Menu{
     Zoo* zoo;
-    int op, op2, a;
-    int n;
+    int op = -1, op2 = 0, a = 0, n = 0;
 public:
-    Menu(Zoo* _zoo) : zoo(_zoo), op(-1), n(0), op2(0), a(0) {}
+    Menu(Zoo* _zoo): zoo(_zoo) {} ///
 
-    void MainMenu();
+    void MainMenu(){
+        while (op){
+            n = zoo->GetZooLen();
+
+            cout << "Клетки:\n";
+            zoo->Repr();
+            cout << n << ". <Добавить клетку>\n";
+
+            cin >> op;
+            system("clear");
+
+            op = DoOP();
+        }
+    }
+
 private:
-    int DoOP();
+    int DoOP(){
 
-    void AnimalMenu();
+        if (op > n || op < 0) return 0;
 
-    void ChooseConcretePlace();
+        if (op == n){
+            BoxMenu(); return 1;
+        }
 
-    void ChooseNewAnimal();
+        AnimalMenu(); return 1;
+    }
+
+    void BoxMenu(){
+        cout<<"Какого размера?\n";
+
+        cin >> n;
+        system("clear");
+        if (n>0){
+            zoo->Add(n); ///
+        }
+    }
+
+    void AnimalMenu(){
+        cout << "Клетка №" << op << ": ";
+        (*zoo)[op].Repr();
+        cout << "\nДоступные действия:\n"
+                "0. Информация о животном\n"
+                "1. Поздоровоться с животным\n"
+                "2. Поменять животное\n"
+                "3. Освободить клетку\n";
+
+        cin >> op2;
+        system("clear");
+
+        if (op2<3) ChooseConcretePlace();
+        else zoo->Clear(op); ///
+    }
+
+    void ChooseConcretePlace(){
+        cout<<"Какое именно? ";
+        (*zoo)[op].Repr();
+        cout <<"\n(0";
+        for (int i = 1; i < (*zoo)[op].GetBoxLen(); i++){
+            cout<<"/"<<i;
+        }
+        cout <<")\n";
+        cin >> a;
+        system("clear");
+
+        switch (op2) {
+            case 0:
+                (*zoo)[op].Info(a); cout<<"\n"; break;
+            case 1:
+                (*zoo)[op].Greeting(a); cout<<"\n"; break;
+            case 2:
+                ChooseNewAnimal(); break;
+            default:
+                break;
+        }
+    }
+
+    void ChooseNewAnimal(){
+        cout << "Выберете новое животнеое\n"
+                "0. Кролик\n"
+                "1. Волк\n";
+
+        cin >> op2;
+        system("clear");
+
+        IAnimal* animal = nullptr;
+        switch (op2) {
+            case 0:
+                animal = new Rabbit;
+                break;
+            case 1:
+                animal = new Wolf;
+                break;
+            default: break;
+            }
+        if (animal) {
+            try{
+                (*zoo)[op].Init(animal,a); ///
+            }
+            catch (Iexception* err) {
+                err->show();
+                for (int i = 0; i < zoo->GetZooLen();i++){
+                    if (i!=op){
+                        for (int j = 0; j < (*zoo)[i].GetBoxLen(); j++){
+                            if (!(*zoo)[i][j]){
+                                try{
+                                    (*zoo)[i].Init(animal, j);
+                                    return;
+                                }
+                                catch (Iexception* err){
+
+                                }
+                            }
+                        }
+                    }
+                }
+                zoo->Add(1);
+                (*zoo)[zoo->GetZooLen()-1].Init(animal, 0);
+            }
+        }
+    }
 };
+
+#endif //ZOO2_MENU_H

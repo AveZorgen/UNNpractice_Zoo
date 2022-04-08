@@ -1,57 +1,58 @@
-#pragma once
-#include <iostream>
-#include <string>
+//
+// Created by ave-zorgen on 31.03.2022.
+//
 
+#ifndef ZOO2_ANIMALS_H
+#define ZOO2_ANIMALS_H
+
+#include <iostream>
 using namespace std;
 
 class IAnimal {
 public:
-	virtual string GetInfo() = 0;
-	virtual int isAgressive() = 0;
-	virtual void MakeRoar() = 0;
+    virtual string GetInfo() = 0;
+    virtual void MakeRoar() = 0;
+    virtual int isAgressive() = 0;
+    virtual ~IAnimal() = default;//cout << "[~IAnimal]"<< this<<"\n";}
+    virtual IAnimal* createAnimal() = 0;
 };
 
 class Herbivores : public IAnimal {
 protected:
-	string ClassInfo = "Травоядное";
-	string Roar = "Хрум-хрум";
+    string ClassInfo = "РўСЂР°РІРѕСЏРґРЅРѕРµ";
+    string Roar = "РҐСЂСѓРј-С…СЂСѓРј";
 public:
-	string GetInfo() { return ClassInfo; }
-	int isAgressive() { return 0; }
-	void MakeRoar() { cout << Roar; }
-};
-
-class Rabbit : public Herbivores {
-protected:
-	string PersonalInfo = "Кролик Роджер";
-	string Roar = Herbivores::Roar = "Фыр-фыр";
-	string GetInfo() { return ClassInfo + "; " + PersonalInfo; }
+    string GetInfo() override {return ClassInfo; }
+    int isAgressive() override { return 0;}
+    void MakeRoar() override { cout << Roar; }
+    virtual IAnimal* createAnimal() {return new Herbivores;}
 };
 
 class Carnivores : public IAnimal {
 protected:
-	string ClassInfo = "Плотоядное";
-	string Roar = "Чавк-чавк";
+    string ClassInfo = "РџР»РѕС‚РѕСЏРґРЅРѕРµ";
+    string Roar = "Р§Р°РІРє-Р§Р°РІРє";
 public:
-	string GetInfo() { return ClassInfo; }
-	int isAgressive() { return 1; }
-	void MakeRoar() { cout << Roar; }
+    string GetInfo() override { return ClassInfo; }
+    int isAgressive() override { return 1;}
+    void MakeRoar() override { cout << Roar; }
+    virtual IAnimal* createAnimal() {return new Carnivores;}
+};
+
+class Rabbit : public Herbivores {
+protected:
+    string PersonalInfo = "РљСЂРѕР»РёРє Р РѕРґР¶РµСЂ";
+    string Roar = Herbivores::Roar = "Р¤С‹СЂ-С„С‹СЂ";
+    string GetInfo() override { return ClassInfo + "; " + PersonalInfo; }
+    virtual IAnimal* createAnimal() {return new Rabbit;}
 };
 
 class Wolf : public Carnivores {
 protected:
-	string PersonalInfo = "Волк - зубами щёлк";
-	string Roar = Carnivores::Roar = "Аууф";
-	string GetInfo() { return ClassInfo + "; " + PersonalInfo; }
+    string PersonalInfo = "Р’РѕР»Рє - Р·СѓР±Р°РјРё С‰С‘Р»Рє";
+    string Roar = Carnivores::Roar = "РђСѓСѓС„";
+    string GetInfo() override { return ClassInfo + "; " + PersonalInfo; }
+    virtual IAnimal* createAnimal() {return new Wolf;}
 };
 
-//для копирования в IAnimal определить getclone (который
-//объяснаяет как копировать
-//если не копировать, а перемещать, то
-//конструктор копирования пустым и в приват
-//и приравание = перемещение
-
-//try во все клетки
-//если во всех ошибки, то создать новую и туда
-//
-//в клетке массив животных
+#endif //ZOO2_ANIMALS_H
