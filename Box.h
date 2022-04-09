@@ -1,4 +1,4 @@
-//
+﻿//
 // Created by ave-zorgen on 31.03.2022.
 //
 
@@ -30,6 +30,7 @@ public:
     int GetBoxLen() { return n;}
 
     int GetPoint() { return p;}
+    void SetPoint(int _p) { p = _p; }
 
     void Greeting(int i)  {
         if (animals[i]) animals[i]->MakeRoar();

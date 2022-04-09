@@ -1,4 +1,4 @@
-//
+﻿//
 // Created by ave-zorgen on 01.04.2022.
 //
 
@@ -22,7 +22,7 @@ public:
             cout << n << ". <Добавить клетку>\n";
 
             cin >> op;
-            system("clear");
+            system("cls");
 
             op = DoOP();
         }
@@ -44,7 +44,7 @@ private:
         cout<<"Какого размера?\n";
 
         cin >> n;
-        system("clear");
+        system("cls");
         if (n>0){
             zoo->Add(n); ///
         }
@@ -60,7 +60,7 @@ private:
                 "3. Освободить клетку\n";
 
         cin >> op2;
-        system("clear");
+        system("cls");
 
         switch (op2) {
             case 0:
@@ -86,7 +86,7 @@ private:
         }
         cout <<")\n";
         cin >> a;
-        system("clear");
+        system("cls");
 
         switch (op2) {
             case 0:
@@ -103,7 +103,7 @@ private:
                 "1. Волк\n";
 
         cin >> op2;
-        system("clear");
+        system("cls");
 
         IAnimal* animal = nullptr;
         switch (op2) {
