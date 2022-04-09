@@ -1,4 +1,4 @@
-﻿//
+//
 // Created by ave-zorgen on 01.04.2022.
 //
 
@@ -22,7 +22,7 @@ public:
             cout << n << ". <Добавить клетку>\n";
 
             cin >> op;
-            system("cls");
+            system("clear");
 
             op = DoOP();
         }
@@ -44,7 +44,7 @@ private:
         cout<<"Какого размера?\n";
 
         cin >> n;
-        system("cls");
+        system("clear");
         if (n>0){
             zoo->Add(n); ///
         }
@@ -56,14 +56,25 @@ private:
         cout << "\nДоступные действия:\n"
                 "0. Информация о животном\n"
                 "1. Поздоровоться с животным\n"
-                "2. Поменять животное\n"
+                "2. Добавить животное\n"
                 "3. Освободить клетку\n";
 
         cin >> op2;
-        system("cls");
+        system("clear");
 
-        if (op2<3) ChooseConcretePlace();
-        else zoo->Clear(op); ///
+        switch (op2) {
+            case 0:
+            case 1:
+                ChooseConcretePlace(); break;
+            case 2:
+                ChooseNewAnimal(); break;
+            case 3:
+                zoo->Clear(op); break;
+            default:;
+        }
+
+//        if (op2<2) ChooseConcretePlace();
+//        else zoo->Clear(op); ///
     }
 
     void ChooseConcretePlace(){
@@ -75,17 +86,14 @@ private:
         }
         cout <<")\n";
         cin >> a;
-        system("cls");
+        system("clear");
 
         switch (op2) {
             case 0:
                 (*zoo)[op].Info(a); cout<<"\n"; break;
             case 1:
                 (*zoo)[op].Greeting(a); cout<<"\n"; break;
-            case 2:
-                ChooseNewAnimal(); break;
-            default:
-                break;
+            default:;
         }
     }
 
@@ -95,7 +103,7 @@ private:
                 "1. Волк\n";
 
         cin >> op2;
-        system("cls");
+        system("clear");
 
         IAnimal* animal = nullptr;
         switch (op2) {
@@ -109,30 +117,25 @@ private:
             }
         if (animal) {
             try{
-                (*zoo)[op].Init(animal,a); ///
+                (*zoo)[op].Init(animal); ///
             }
             catch (Iexception* err) {
                 err->show();
                 for (int i = 0; i < zoo->GetZooLen();i++){
                     if (i!=op){
-                        for (int j = 0; j < (*zoo)[i].GetBoxLen(); j++){
-                            if (!(*zoo)[i][j]){
-                                try{
-                                    (*zoo)[i].Init(animal, j);
-                                    return;
-                                }
-                                catch (Iexception* err){
-
-                                }
-                            }
+                        try {
+                            (*zoo)[i].Init(animal);
+                            return;
+                        }
+                        catch (...){
+                            break;
                         }
                     }
                 }
                 zoo->Add(1);
-                (*zoo)[zoo->GetZooLen()-1].Init(animal, 0);
+                (*zoo)[zoo->GetZooLen()-1].Init(animal);
             }
         }
-        
     }
 };
 

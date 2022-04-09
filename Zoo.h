@@ -1,4 +1,4 @@
-﻿//
+//
 // Created by ave-zorgen on 31.03.2022.
 //
 
@@ -39,9 +39,13 @@ public:
     }
 
     void Clear(int _n){
-        for (int i = 0; i < boxes[_n].GetBoxLen(); i++){
-            boxes[_n].Init(nullptr,i);
+        Box* tmp = new Box[n];
+        for (int i = 0; i < n; i++){
+            tmp[i] = boxes[i];
         }
+        delete[] boxes;
+        boxes = tmp;
+
         cout << "Cleared!\n";
     }
 

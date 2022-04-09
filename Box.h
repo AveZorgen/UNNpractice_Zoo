@@ -1,4 +1,4 @@
-﻿//
+//
 // Created by ave-zorgen on 31.03.2022.
 //
 
@@ -10,15 +10,17 @@
 
 class Box {
     int n;
+    int p;
     IAnimal** animals;
 public:
-    Box(int _n = 0): n(_n) {
+    Box(int _n = 0): n(_n), p(0) {
         animals = new IAnimal*[n];
         for (int i = 0; i < n; i++)
             animals[i] = nullptr;
     }
 
     Box(const Box& b){
+        p = b.p;
         n = b.n;
         animals = new IAnimal*[n];
         for (int i = 0; i < n; i++)
@@ -27,13 +29,17 @@ public:
 
     int GetBoxLen() { return n;}
 
+    int GetPoint() { return p;}
+
     void Greeting(int i)  {
         if (animals[i]) animals[i]->MakeRoar();
         else cout << "[Anullptr] Тишина...";
     }
 
     void Info(int i)  {
-        if (animals[i]) cout << animals[i]->GetInfo();
+//        if (animals[i]) cout << animals[i]->GetInfo();
+//        else cout << "[Anullptr] Свободно";
+        if (i<p) cout << animals[i]->GetInfo();
         else cout << "[Anullptr] Свободно";
     }
 
@@ -43,10 +49,10 @@ public:
         }
     }
 
-    void Init(IAnimal* a, int i) {
+    void Init(IAnimal* a) {
+        if (p==n) throw new StrErr("Нет места");
         int agr = -1;
-        for (int j = 0; j < n; j++) {
-            if ((*this)[j] && (j!=i))
+        for (int j = 0; j < p; j++) {
                 agr=animals[j]->isAgressive();
             if (agr>0){
                 throw new StrErr("Он его съест!");
@@ -56,8 +62,9 @@ public:
             throw new StrErr("Он его съест!");
         }
 
-        delete animals[i];
-        animals[i] = a;
+//        delete animals[p];
+        animals[p] = a;
+        p++;
     }
 
     IAnimal*& operator[](int i) const {
@@ -67,18 +74,22 @@ public:
     Box& operator=(const Box& b){
         if (&b == this) { return *this; }
 
+        for(int i = 0; i < p; i++){
+            delete animals[i];
+        }
         delete[] animals;
 
+        p = b.p;
         n = b.n;
         animals = new IAnimal*[n];
-        for (int i = 0; i < n; i++)
-            animals[i] = b[i] ? b[i]->createAnimal() : nullptr;
+        for (int i = 0; i < p; i++)
+            animals[i] = b[i]->createAnimal();
 
         return *this;
     }
 
     ~Box()  {
-        for(int i = 0; i < n; i++){
+        for(int i = 0; i < p; i++){
             delete animals[i];
         }
         delete[] animals;
