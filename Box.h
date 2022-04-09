@@ -73,7 +73,7 @@ public:
     Box& operator=(const Box& b){
         if (&b == this) { return *this; }
 
-        for(int i = 0; i < n; i++){
+        for (int i = 0; i < p; i++){
             delete animals[i];
         }
         delete[] animals;
@@ -88,7 +88,7 @@ public:
     }
 
     ~Box()  {
-        for(int i = 0; i < n; i++){
+        for(int i = 0; i < p; i++){
             delete animals[i];
         }
         delete[] animals;
