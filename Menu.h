@@ -72,9 +72,6 @@ private:
                 zoo->Clear(op); break;
             default:;
         }
-
-//        if (op2<2) ChooseConcretePlace();
-//        else zoo->Clear(op); ///
     }
 
     void ChooseConcretePlace(){
