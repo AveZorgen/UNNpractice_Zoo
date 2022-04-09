@@ -23,23 +23,22 @@ public:
         p = b.p;
         n = b.n;
         animals = new IAnimal*[n];
-        for (int i = 0; i < n; i++)
-            animals[i] = b[i] ? b[i]->createAnimal() : nullptr;
+        for (int i = 0; i < p; i++)
+            animals[i] = b[i]->createAnimal();
     }
 
     int GetBoxLen() { return n;}
 
     int GetPoint() { return p;}
+
     void SetPoint(int _p) { p = _p; }
 
     void Greeting(int i)  {
-        if (animals[i]) animals[i]->MakeRoar();
+        if (i<p) animals[i]->MakeRoar();
         else cout << "[Anullptr] Тишина...";
     }
 
     void Info(int i)  {
-//        if (animals[i]) cout << animals[i]->GetInfo();
-//        else cout << "[Anullptr] Свободно";
         if (i<p) cout << animals[i]->GetInfo();
         else cout << "[Anullptr] Свободно";
     }
@@ -63,7 +62,6 @@ public:
             throw new StrErr("Он его съест!");
         }
 
-//        delete animals[p];
         animals[p] = a;
         p++;
     }
@@ -75,7 +73,7 @@ public:
     Box& operator=(const Box& b){
         if (&b == this) { return *this; }
 
-        for(int i = 0; i < p; i++){
+        for(int i = 0; i < n; i++){
             delete animals[i];
         }
         delete[] animals;
@@ -90,7 +88,7 @@ public:
     }
 
     ~Box()  {
-        for(int i = 0; i < p; i++){
+        for(int i = 0; i < n; i++){
             delete animals[i];
         }
         delete[] animals;
