@@ -122,7 +122,7 @@ private:
                                     return;
                                 }
                                 catch (Iexception* err){
-
+                                    break;
                                 }
                             }
                         }

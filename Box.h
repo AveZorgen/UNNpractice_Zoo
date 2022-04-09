@@ -67,6 +67,9 @@ public:
     Box& operator=(const Box& b){
         if (&b == this) { return *this; }
 
+        for (int i = 0; i < n; i++) {
+            delete animals[i];
+        }
         delete[] animals;
 
         n = b.n;
