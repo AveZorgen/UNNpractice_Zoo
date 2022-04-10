@@ -49,7 +49,7 @@ public:
         }
     }
 
-    void Init(IAnimal* a) {
+    void SetAnimal(IAnimal* a) {
         if (p==n) throw new StrErr("Нет места");
         int agr = -1;
         for (int j = 0; j < p; j++) {

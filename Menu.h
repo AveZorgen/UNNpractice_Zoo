@@ -110,27 +110,25 @@ private:
             case 1:
                 animal = new Wolf;
                 break;
-            default: break;
+            default:;
             }
         if (animal) {
             try{
-                (*zoo)[op].Init(animal); ///
+                (*zoo)[op].SetAnimal(animal); ///
             }
             catch (Iexception* err) {
                 err->show();
                 for (int i = 0; i < zoo->GetZooLen();i++){
                     if (i!=op){
                         try {
-                            (*zoo)[i].Init(animal);
+                            (*zoo)[i].SetAnimal(animal);
                             return;
                         }
-                        catch (...){
-                            break;
-                        }
+                        catch (...) {}
                     }
                 }
                 zoo->Add(1);
-                (*zoo)[zoo->GetZooLen()-1].Init(animal);
+                (*zoo)[zoo->GetZooLen()-1].SetAnimal(animal);
             }
         }
     }
