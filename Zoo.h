@@ -25,7 +25,7 @@ public:
         }
     }
 
-    void Add(int newBoxLen){ ///
+    void AddBox(int newBoxLen){ ///
         Box* tmp = new Box[n+1];
         for (int i = 0; i < n; i++){
             tmp[i] = boxes[i];
@@ -36,6 +36,24 @@ public:
         delete[] boxes;
         boxes = tmp;
         cout << "Added!\n";
+    }
+
+    void AddAnimal(IAnimal* a, int i) {
+        try {
+            boxes[i].SetAnimal(a);
+        }
+        catch (Iexception* err) {
+            err->show();
+            for (int i = 0; i < n; i++) {
+                try {
+                    boxes[i].SetAnimal(a);
+                    return;
+                }
+                catch (...) { }
+            }
+            AddBox(1);
+            boxes[n - 1].SetAnimal(a);
+        }
     }
 
     void Clear(int _n){

@@ -46,7 +46,7 @@ private:
         cin >> n;
         system("cls");
         if (n>0){
-            zoo->Add(n); ///
+            zoo->AddBox(n); ///
         }
     }
 
@@ -113,23 +113,7 @@ private:
             default:;
             }
         if (animal) {
-            try{
-                (*zoo)[op].SetAnimal(animal); ///
-            }
-            catch (Iexception* err) {
-                err->show();
-                for (int i = 0; i < zoo->GetZooLen();i++){
-                    if (i!=op){
-                        try {
-                            (*zoo)[i].SetAnimal(animal);
-                            return;
-                        }
-                        catch (...) {}
-                    }
-                }
-                zoo->Add(1);
-                (*zoo)[zoo->GetZooLen()-1].SetAnimal(animal);
-            }
+            zoo->AddAnimal(animal, op);
         }
     }
 };
