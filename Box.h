@@ -50,18 +50,11 @@ public:
     }
 
     void SetAnimal(IAnimal* a) {
-        if (p==n) throw new StrErr("Нет места");
-        int agr = -1;
-        for (int j = 0; j < p; j++) {
-                agr=animals[j]->isAgressive();
-            if (agr>0){
+        if (p == n) throw new StrErr("Нет места");
+        if (p){
+            if (!(animals[0]->isAgressive() + a->isAgressive()))
                 throw new StrErr("Он его съест!");
-            }
         }
-        if (a && (a->isAgressive()==1 && agr==0)){
-            throw new StrErr("Он его съест!");
-        }
-
         animals[p] = a;
         p++;
     }
@@ -88,7 +81,7 @@ public:
     }
 
     ~Box()  {
-        for(int i = 0; i < p; i++){
+        for (int i = 0; i < p; i++){
             delete animals[i];
         }
         delete[] animals;

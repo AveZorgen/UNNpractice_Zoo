@@ -8,6 +8,7 @@
 #include <iostream>
 using namespace std;
 
+
 class IAnimal {
 public:
     virtual string GetInfo() = 0;
@@ -34,7 +35,7 @@ protected:
     string Roar = "Чавк-Чавк";
 public:
     string GetInfo() override { return ClassInfo; }
-    int isAgressive() override { return 1;}
+    int isAgressive() override { return 0;}
     void MakeRoar() override { cout << Roar; }
     virtual IAnimal* createAnimal() {return new Carnivores;}
 };

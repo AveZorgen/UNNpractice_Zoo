@@ -13,14 +13,14 @@ public:
     virtual void show() = 0;
 };
 
-class IntErr : public Iexception {
-    int err;
-public:
-    IntErr(int code = 0) : err(code) {}
-    void show() override {
-        cout << "code error:" << err<<"\n";
-    }
-};
+//class IntErr : public Iexception {
+//    int err;
+//public:
+//    IntErr(int code = 0) : err(code) {}
+//    void show() override {
+//        cout << "code error:" << err<<"\n";
+//    }
+//};
 
 class StrErr : public Iexception {
     string err;
