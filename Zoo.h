@@ -15,7 +15,7 @@ public:
         boxes = new Box[_n];
     }
 
-    int GetZooLen(){ return n;}
+    int getZooLen(){ return n;}
 
     void Repr(){
         for (int i = 0; i < n; i++){
@@ -26,6 +26,7 @@ public:
     }
 
     void AddBox(int newBoxLen){ ///
+        if (newBoxLen<=0) return;
         Box* tmp = new Box[n+1];
         for (int i = 0; i < n; i++){
             tmp[i] = boxes[i];
@@ -40,28 +41,27 @@ public:
 
     void AddAnimal(IAnimal* a, int i) {
         try {
-            boxes[i].SetAnimal(a);
+            boxes[i].setAnimal(a);
         }
         catch (Iexception* err) {
             err->show();
-            for (int i = 0; i < n; i++) {
+            for (i = 0; i < n; i++) {
                 try {
-                    boxes[i].SetAnimal(a);
+                    boxes[i].setAnimal(a);
                     return;
                 }
                 catch (...) { }
             }
             AddBox(1);
-            boxes[n - 1].SetAnimal(a);
+            boxes[n - 1].setAnimal(a);
         }
     }
 
     void Clear(int _n){
-        for (int i = 0; i < boxes[_n].GetPoint(); i++) {
+        for (int i = 0; i < boxes[_n].getPoint(); i++) {
             delete boxes[_n][i];
-            boxes[_n][i] = nullptr;
         }
-        boxes[_n].SetPoint(0);
+        boxes[_n].setPoint(0);
 
         cout << "Cleared!\n";
     }

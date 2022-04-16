@@ -35,7 +35,7 @@ protected:
     string Roar = "Чавк-Чавк";
 public:
     string GetInfo() override { return ClassInfo; }
-    int isAgressive() override { return 0;}
+    int isAgressive() override { return 1;}
     void MakeRoar() override { cout << Roar; }
     virtual IAnimal* createAnimal() {return new Carnivores;}
 };

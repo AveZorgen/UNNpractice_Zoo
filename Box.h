@@ -12,6 +12,13 @@ class Box {
     int n;
     int p;
     IAnimal** animals;
+    void ValidatePlace(IAnimal* a){
+        if (p == n) throw new StrErr("Нет места");
+        if (p) {
+            if (animals[0]->isAgressive() + a->isAgressive())
+                throw new StrErr("Он его съест!");
+        }
+    }
 public:
     Box(int _n = 0): n(_n), p(0) {
         animals = new IAnimal*[n];
@@ -27,19 +34,25 @@ public:
             animals[i] = b[i]->createAnimal();
     }
 
-    int GetBoxLen() { return n;}
+    int getBoxLen() { return n;}
 
-    int GetPoint() { return p;}
+    int getPoint() { return p;}
 
-    void SetPoint(int _p) { p = _p; }
+    void setPoint(int _p) { p = _p; }
+
+    void setAnimal(IAnimal* a) {
+        ValidatePlace(a);
+        animals[p] = a;
+        p++;
+    }
 
     void Greeting(int i)  {
-        if (i<p) animals[i]->MakeRoar();
+        if (i < p) animals[i]->MakeRoar();
         else cout << "[Anullptr] Тишина...";
     }
 
     void Info(int i)  {
-        if (i<p) cout << animals[i]->GetInfo();
+        if (i < p) cout << animals[i]->GetInfo();
         else cout << "[Anullptr] Свободно";
     }
 
@@ -47,16 +60,6 @@ public:
         for (int i = 0; i < n; i++) {
             cout << "<"; Info(i); cout << "> ";
         }
-    }
-
-    void SetAnimal(IAnimal* a) {
-        if (p == n) throw new StrErr("Нет места");
-        if (p){
-            if (!(animals[0]->isAgressive() + a->isAgressive()))
-                throw new StrErr("Он его съест!");
-        }
-        animals[p] = a;
-        p++;
     }
 
     IAnimal*& operator[](int i) const {

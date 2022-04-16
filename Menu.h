@@ -15,7 +15,7 @@ public:
 
     void MainMenu(){
         while (op){
-            n = zoo->GetZooLen();
+            n = zoo->getZooLen();
 
             cout << "Клетки:\n";
             zoo->Repr();
@@ -30,7 +30,6 @@ public:
 
 private:
     int DoOP(){
-
         if (op > n || op < 0) return 0;
 
         if (op == n){
@@ -45,9 +44,7 @@ private:
 
         cin >> n;
         system("cls");
-        if (n>0){
-            zoo->AddBox(n); ///
-        }
+        zoo->AddBox(n); ///
     }
 
     void AnimalMenu(){
@@ -78,7 +75,7 @@ private:
         cout<<"Какое именно? ";
         (*zoo)[op].Repr();
         cout <<"\n(0";
-        for (int i = 1; i < (*zoo)[op].GetBoxLen(); i++){
+        for (int i = 1; i < (*zoo)[op].getBoxLen(); i++){
             cout<<"/"<<i;
         }
         cout <<")\n";
