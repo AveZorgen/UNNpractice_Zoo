@@ -44,7 +44,8 @@ private:
 
         cin >> n;
         system("cls");
-        zoo->AddBox(n); ///
+        if (n>0)
+            zoo->AddBox(n); ///
     }
 
     void AnimalMenu(){

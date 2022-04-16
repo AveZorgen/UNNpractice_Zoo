@@ -26,7 +26,6 @@ public:
     }
 
     void AddBox(int newBoxLen){ ///
-        if (newBoxLen<=0) return;
         Box* tmp = new Box[n+1];
         for (int i = 0; i < n; i++){
             tmp[i] = boxes[i];
