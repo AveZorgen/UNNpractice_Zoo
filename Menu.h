@@ -7,18 +7,33 @@
 
 #include "Zoo.h"
 
+class Print {
+    Zoo* zoo;
+public:
+    Print(Zoo* z) :zoo(z) {}
+    void event() {
+        zoo->Repr();
+    }
+};
+
 class Menu{
     Zoo* zoo;
+    Print obsPrinter;
     int op = -1, op2 = 0, a = 0, n = 0;
+    void ZooEvent() {
+        obsPrinter.event();
+    }
+
 public:
-    Menu(Zoo* _zoo): zoo(_zoo) {} ///
+    Menu(Zoo* _zoo): zoo(_zoo), obsPrinter(zoo) { } ///
 
     void MainMenu(){
         while (op){
             n = zoo->getZooLen();
 
             cout << "Клетки:\n";
-            zoo->Repr();
+            ZooEvent();
+            //zoo->Repr();
             cout << n << ". <Добавить клетку>\n";
 
             cin >> op;
@@ -101,6 +116,7 @@ private:
         system("cls");
 
         IAnimal* animal = nullptr;
+
         switch (op2) {
             case 0:
                 animal = new Rabbit;
@@ -117,3 +133,6 @@ private:
 };
 
 #endif //ZOO2_MENU_H
+
+
+

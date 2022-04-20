@@ -8,6 +8,7 @@
 #include "Animals.h"
 #include "Exceptions.h"
 
+
 class Box {
     int n;
     int p;
@@ -90,5 +91,6 @@ public:
         delete[] animals;
     }
 };
+
 
 #endif //ZOO2_BOX_H
