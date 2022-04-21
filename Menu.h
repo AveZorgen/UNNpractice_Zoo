@@ -16,12 +16,27 @@ public:
     }
 };
 
+class GreetNewbee{
+    Box* box;
+public:
+    GreetNewbee(Box* b = nullptr) : box(b) {}
+    void event() {
+        cout << "Привет, ";
+        box->Info(box->getPoint() - 1);
+        cout << "\n";
+    }
+};
+
 class Menu{
     Zoo* zoo;
     Print obsPrinter;
+    GreetNewbee obsGreeter;
     int op = -1, op2 = 0, a = 0, n = 0;
     void ZooEvent() {
         obsPrinter.event();
+    }
+    void AnimalEvent() {
+        obsGreeter.event();
     }
 
 public:
@@ -33,7 +48,6 @@ public:
 
             cout << "Клетки:\n";
             ZooEvent();
-            //zoo->Repr();
             cout << n << ". <Добавить клетку>\n";
 
             cin >> op;
@@ -128,6 +142,9 @@ private:
             }
         if (animal) {
             zoo->AddAnimal(animal, op);
+
+            obsGreeter = GreetNewbee(&((*zoo)[op]));
+            AnimalEvent();
         }
     }
 };

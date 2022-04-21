@@ -7,24 +7,12 @@
 
 #include "Box.h"
 
-class GreetNewbee{
-    Box* box;
-public:
-    GreetNewbee(Box* b = nullptr) : box(b) {}
-    void event() {
-        cout << "Привет, ";
-        box->Info(box->getPoint() - 1);
-        cout << "\n";
-    }
-};
+
 
 class Zoo {
     int n;
     Box* boxes;
-    GreetNewbee obs;
-    void AnimalEvent() {
-        obs.event();
-    }
+
 public:
     Zoo(int _n = 0): n(_n) {
         boxes = new Box[_n];
@@ -53,27 +41,21 @@ public:
         cout << "Added!\n";
     }
 
-    void AddAnimalObs(IAnimal* a, int i) {
-        boxes[i].setAnimal(a);
-        obs = GreetNewbee(&boxes[i]);
-        AnimalEvent();
-    }
-
-    void AddAnimal(IAnimal* a, int i) {
+    void AddAnimal(IAnimal* a, int& i) {
         try {
-            AddAnimalObs(a, i);
+            boxes[i].setAnimal(a);
         }
         catch (Iexception* err) {
             err->show();
             for (i = 0; i < n; i++) {
                 try {
-                    AddAnimalObs(a, i);
+                    boxes[i].setAnimal(a);
                     return;
                 }
                 catch (...) { }
             }
             AddBox(1);
-            AddAnimalObs(a, i);
+            boxes[i].setAnimal(a);
         }
     }
 
