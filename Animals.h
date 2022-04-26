@@ -14,7 +14,7 @@ public:
     virtual string GetInfo() = 0;
     virtual void MakeRoar() = 0;
     virtual int isAgressive() = 0;
-    virtual ~IAnimal() = default;//cout << "[~IAnimal]"<< this<<"\n";}
+    virtual ~IAnimal() = default;
     virtual IAnimal* createAnimal() = 0;
 };
 

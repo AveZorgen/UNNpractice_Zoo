@@ -7,58 +7,41 @@
 
 #include "Zoo.h"
 
-class Print {
-    Zoo* zoo;
-public:
-    Print(Zoo* z) :zoo(z) {}
-    void event() {
-        zoo->Repr();
-    }
-};
-
-class GreetNewbee{
-    Box* box;
-public:
-    GreetNewbee(Box* b = nullptr) : box(b) {}
-    void event() {
-        cout << "Привет, ";
-        box->Info(box->getPoint() - 1);
-        cout << "\n";
-    }
-};
-
 class Menu{
     Zoo* zoo;
-    Print obsPrinter;
-    GreetNewbee obsGreeter;
-    int op = -1, op2 = 0, a = 0, n = 0;
-    void ZooEvent() {
-        obsPrinter.event();
-    }
-    void AnimalEvent() {
-        obsGreeter.event();
-    }
+    int op = -1, op2 = 0, a = 0, n = 0, path = 0;
 
 public:
-    Menu(Zoo* _zoo): zoo(_zoo), obsPrinter(zoo) { } ///
+    Menu(Zoo* _zoo): zoo(_zoo) {
+        zoo->setObs(new Printer(zoo));
+    }
 
     void MainMenu(){
         while (op){
+            if (path == 110) {
+                //cin >> op;
+                //system("cls");
+                zoo->Repr();
+            }
+            
+
             n = zoo->getZooLen();
 
-            cout << "Клетки:\n";
-            ZooEvent();
             cout << n << ". <Добавить клетку>\n";
 
-            cin >> op;
-            system("cls");
+            //cout << path << "\n";
+            path = 0;
 
+            cin >> op;
+            
             op = DoOP();
         }
     }
 
 private:
     int DoOP(){
+        path = path * 10 + 1;
+
         if (op > n || op < 0) return 0;
 
         if (op == n){
@@ -69,15 +52,16 @@ private:
     }
 
     void BoxMenu(){
+        path = path * 10 + 0;
         cout<<"Какого размера?\n";
 
         cin >> n;
-        system("cls");
         if (n>0)
-            zoo->AddBox(n); ///
+            zoo->AddBox(n);
     }
 
     void AnimalMenu(){
+        path = path * 10 + 1;
         cout << "Клетка №" << op << ": ";
         (*zoo)[op].Repr();
         cout << "\nДоступные действия:\n"
@@ -87,7 +71,6 @@ private:
                 "3. Освободить клетку\n";
 
         cin >> op2;
-        system("cls");
 
         switch (op2) {
             case 0:
@@ -102,6 +85,7 @@ private:
     }
 
     void ChooseConcretePlace(){
+        path = path * 10 + 0;
         cout<<"Какое именно? ";
         (*zoo)[op].Repr();
         cout <<"\n(0";
@@ -110,7 +94,6 @@ private:
         }
         cout <<")\n";
         cin >> a;
-        system("cls");
 
         switch (op2) {
             case 0:
@@ -122,12 +105,12 @@ private:
     }
 
     void ChooseNewAnimal(){
+        path = path * 10 + 1;
         cout << "Выберете новое животное\n"
                 "0. Кролик\n"
                 "1. Волк\n";
 
         cin >> op2;
-        system("cls");
 
         IAnimal* animal = nullptr;
 
@@ -142,9 +125,6 @@ private:
             }
         if (animal) {
             zoo->AddAnimal(animal, op);
-
-            obsGreeter = GreetNewbee(&((*zoo)[op]));
-            AnimalEvent();
         }
     }
 };

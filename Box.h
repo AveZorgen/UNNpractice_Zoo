@@ -8,11 +8,17 @@
 #include "Animals.h"
 #include "Exceptions.h"
 
+class IObserver {
+public:
+    virtual void event() = 0;
+    virtual IObserver* CreateObs() = 0;
+};
 
 class Box {
     int n;
-    int p;
+    int p = 0;
     IAnimal** animals;
+    IObserver* obs = nullptr;
     void ValidatePlace(IAnimal* a){
         if (p == n) throw new StrErr("Нет места");
         if (p) {
@@ -20,8 +26,11 @@ class Box {
                 throw new StrErr("Он его съест!");
         }
     }
+    void AnimalEvent() {
+        obs->event();
+    }
 public:
-    Box(int _n = 0): n(_n), p(0) {
+    Box(int _n = 0): n(_n) {
         animals = new IAnimal*[n];
         for (int i = 0; i < n; i++)
             animals[i] = nullptr;
@@ -41,10 +50,13 @@ public:
 
     void setPoint(int _p) { p = _p; }
 
+    void setObs(IObserver* o) { obs = o; }
+
     void setAnimal(IAnimal* a) {
         ValidatePlace(a);
         animals[p] = a;
         p++;
+        AnimalEvent();
     }
 
     void Greeting(int i)  {
@@ -74,13 +86,15 @@ public:
             delete animals[i];
         }
         delete[] animals;
+        delete obs;
 
         p = b.p;
         n = b.n;
         animals = new IAnimal*[n];
         for (int i = 0; i < p; i++)
             animals[i] = b[i]->createAnimal();
-
+        for (int i = 0; i < p; i++)
+            cout << " ";
         return *this;
     }
 
@@ -89,8 +103,20 @@ public:
             delete animals[i];
         }
         delete[] animals;
+        delete obs;
     }
 };
+
+    class GreetNewbee : public IObserver{
+        Box* box;
+        void event() {
+            cout << "Привет, ";
+            box->Info(box->getPoint() - 1);
+        }
+        GreetNewbee* CreateObs() { return new GreetNewbee; }
+    public:
+        GreetNewbee(Box* b = nullptr) : box(b) {}
+    };
 
 
 #endif //ZOO2_BOX_H
