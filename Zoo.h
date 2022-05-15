@@ -97,7 +97,6 @@ class Printer: public IObserver {
     void event() {
         zoo->Repr();
     }
-    Printer* CreateObs() { return new Printer; }
 public:
     Printer(Zoo* z = nullptr) :zoo(z){}
 };

@@ -11,7 +11,6 @@
 class IObserver {
 public:
     virtual void event() = 0;
-    virtual IObserver* CreateObs() = 0;
 };
 
 class Box {
@@ -112,7 +111,6 @@ public:
             box->Info(box->getPoint() - 1);
             cout << "\n";
         }
-        GreetNewbee* CreateObs() { return new GreetNewbee; }
     public:
         GreetNewbee(Box* b = nullptr) : box(b) {}
     };
