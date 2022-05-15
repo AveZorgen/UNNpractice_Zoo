@@ -18,22 +18,16 @@ public:
 
     void MainMenu(){
         while (op){
-            if (path == 110) {
-                //cin >> op;
-                //system("cls");
-                zoo->Repr();
-            }
+            if (path == 110) zoo->Repr();
             
-
             n = zoo->getZooLen();
-
             cout << n << ". <Добавить клетку>\n";
 
-            //cout << path << "\n";
             path = 0;
 
             cin >> op;
-            
+            system("cls");
+
             op = DoOP();
         }
     }
@@ -56,6 +50,8 @@ private:
         cout<<"Какого размера?\n";
 
         cin >> n;
+        system("cls");
+
         if (n>0)
             zoo->AddBox(n);
     }
@@ -71,6 +67,7 @@ private:
                 "3. Освободить клетку\n";
 
         cin >> op2;
+        system("cls");
 
         switch (op2) {
             case 0:
@@ -94,6 +91,7 @@ private:
         }
         cout <<")\n";
         cin >> a;
+        system("cls");
 
         switch (op2) {
             case 0:
@@ -111,6 +109,7 @@ private:
                 "1. Волк\n";
 
         cin >> op2;
+        system("cls");
 
         IAnimal* animal = nullptr;
 

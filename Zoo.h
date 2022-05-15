@@ -24,7 +24,6 @@ public:
             boxes[i].setObs(new GreetNewbee(&(boxes[i])));
         }
         Update();
-        //cout << "A\n";
     }
 
     void setObs(IObserver* o) { obs = o; }
@@ -52,7 +51,6 @@ public:
         delete[] boxes;
         boxes = tmp;
         Update();
-        //cout << "B\n";
     }
 
     void AddAnimal(IAnimal* a, int i) {
@@ -65,7 +63,6 @@ public:
                 try {
                     boxes[i].setAnimal(a);
                     Update();
-                    //cout << "C\n";
                     return;
                 }
                 catch (...) { }
@@ -74,22 +71,15 @@ public:
             boxes[i].setAnimal(a);
         }
         Update();
-        //cout << "D\n";
     }
 
     void Clear(int _n){
-        if (_n < 0 || _n >= n) {
-            Update();
-            //cout << "E\n"; 
-            return;
-        }
         for (int i = 0; i < boxes[_n].getPoint(); i++) {
             delete boxes[_n][i];
         }
         boxes[_n].setPoint(0);
 
         Update();
-        //cout << "F\n";
     }
 
     Box& operator[](int i){
@@ -105,7 +95,6 @@ public:
 class Printer: public IObserver {
     Zoo* zoo;
     void event() {
-        //system("cls");
         zoo->Repr();
     }
     Printer* CreateObs() { return new Printer; }

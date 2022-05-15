@@ -93,8 +93,6 @@ public:
         animals = new IAnimal*[n];
         for (int i = 0; i < p; i++)
             animals[i] = b[i]->createAnimal();
-        for (int i = 0; i < p; i++)
-            cout << " ";
         return *this;
     }
 
@@ -112,6 +110,7 @@ public:
         void event() {
             cout << "Привет, ";
             box->Info(box->getPoint() - 1);
+            cout << "\n";
         }
         GreetNewbee* CreateObs() { return new GreetNewbee; }
     public:
